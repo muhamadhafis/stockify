@@ -1,0 +1,731 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Stockify API Documentation",
+    "version": "1.0.0",
+    "description": "API documentation for Stockify Inventory Management System",
+    "contact": {
+      "name": "Developer",
+      "email": "admin@stockify.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Development server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "username",
+                  "password",
+                  "phone_number",
+                  "full_name"
+                ],
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "phone_number": {
+                    "type": "string"
+                  },
+                  "full_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered successfully"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login user",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "username",
+                  "password"
+                ],
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          }
+        }
+      }
+    },
+    "/auth/send-otp": {
+      "post": {
+        "summary": "Send OTP code via WhatsApp",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "username"
+                ],
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP sent successfully"
+          }
+        }
+      }
+    },
+    "/auth/verify-otp": {
+      "post": {
+        "summary": "Verify OTP code",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "username",
+                  "otp"
+                ],
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "otp": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP verified successfully"
+          }
+        }
+      }
+    },
+    "/businesses": {
+      "get": {
+        "summary": "Get all businesses",
+        "tags": [
+          "Businesses"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of businesses"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new business",
+        "tags": [
+          "Businesses"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Business created"
+          }
+        }
+      }
+    },
+    "/businesses/{keyword}": {
+      "patch": {
+        "summary": "Update business",
+        "tags": [
+          "Businesses"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "keyword",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Business updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete business",
+        "tags": [
+          "Businesses"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "keyword",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Business deleted"
+          }
+        }
+      }
+    },
+    "/dashboard/stats": {
+      "get": {
+        "summary": "Get dashboard statistics",
+        "tags": [
+          "Dashboard"
+        ],
+        "responses": {
+          "200": {
+            "description": "Dashboard statistics retrieved"
+          }
+        }
+      }
+    },
+    "/locations": {
+      "get": {
+        "summary": "Get all locations",
+        "tags": [
+          "Locations"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of locations"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new location",
+        "tags": [
+          "Locations"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Location created"
+          }
+        }
+      }
+    },
+    "/locations/{id}": {
+      "patch": {
+        "summary": "Update location",
+        "tags": [
+          "Locations"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Location updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete location",
+        "tags": [
+          "Locations"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Location deleted successfully"
+          }
+        }
+      }
+    },
+    "/part": {
+      "get": {
+        "summary": "Get all parts",
+        "tags": [
+          "Parts"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of parts"
+          }
+        }
+      },
+      "post": {
+        "summary": "create new part",
+        "tags": [
+          "Parts"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Part created"
+          }
+        }
+      }
+    },
+    "/part/{id}": {
+      "get": {
+        "summary": "get part detail",
+        "tags": [
+          "Parts"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Part detail"
+          }
+        }
+      },
+      "patch": {
+        "summary": "update part",
+        "tags": [
+          "Parts"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Part updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete part",
+        "tags": [
+          "Parts"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Part deleted"
+          }
+        }
+      }
+    },
+    "/stocks": {
+      "get": {
+        "summary": "Get current stock list",
+        "tags": [
+          "Stocks"
+        ],
+        "responses": {
+          "200": {
+            "description": "Stock list"
+          }
+        }
+      }
+    },
+    "/stocks/history": {
+      "get": {
+        "summary": "Get stock transaction history",
+        "tags": [
+          "Stocks"
+        ],
+        "responses": {
+          "200": {
+            "description": "Stock history"
+          }
+        }
+      }
+    },
+    "/stocks/adjust": {
+      "post": {
+        "summary": "adjust stock quantity",
+        "tags": [
+          "Stocks"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "part_id": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "number"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "in",
+                      "out"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Stock adjusted"
+          }
+        }
+      }
+    },
+    "/suppliers": {
+      "get": {
+        "summary": "get all suppliers",
+        "tags": [
+          "Suppliers"
+        ],
+        "responses": {
+          "200": {
+            "description": "Supplier list"
+          }
+        }
+      },
+      "post": {
+        "summary": "create new supplier",
+        "tags": [
+          "Suppliers"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Supplier created"
+          }
+        }
+      }
+    },
+    "/suppliers/{id}": {
+      "get": {
+        "summary": "get supplier detail",
+        "tags": [
+          "Suppliers"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Supplier details"
+          }
+        }
+      },
+      "patch": {
+        "summary": "update supplier info",
+        "tags": [
+          "Suppliers"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Supplier updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete supplier",
+        "tags": [
+          "Suppliers"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Supplier deleted"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "get all users",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "User list"
+          }
+        }
+      },
+      "post": {
+        "summary": "create a user",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "201": {
+            "description": "User created"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "patch": {
+        "summary": "update user",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete user",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Businesses",
+      "description": "Business management"
+    },
+    {
+      "name": "Dashboard",
+      "description": "Statistics and data overview"
+    },
+    {
+      "name": "Locations",
+      "description": "Storage location management"
+    },
+    {
+      "name": "Parts",
+      "description": "Spare parts and items management"
+    },
+    {
+      "name": "Stocks",
+      "description": "Inventory stock management"
+    },
+    {
+      "name": "Suppliers",
+      "description": "Vendor and supplier management"
+    },
+    {
+      "name": "Users",
+      "description": "User administration management"
+    }
+  ]
+}

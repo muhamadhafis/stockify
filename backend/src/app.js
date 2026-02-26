@@ -1,5 +1,7 @@
 const express = require('express');
 const rateLimit = require('express-rate-limit');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
 const errorHandler = require('./middleware/errorHandler');
 const routes = require('./routes');
 require('./services/cronService');
@@ -14,6 +16,9 @@ const limiter = rateLimit({
 
 app.use(limiter);
 app.use(express.json());
+
+// API Documentation (Swagger)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Routes
 app.use('/', routes);

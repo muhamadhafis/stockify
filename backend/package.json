@@ -2,7 +2,8 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node --watch src/server.js"
+    "dev": "node --watch src/server.js",
+    "docs": "node -e \"const fs = require('fs'); const spec = require('./src/config/swagger'); fs.writeFileSync('openapi-spec.json', JSON.stringify(spec, null, 2)); console.log('Swagger documentation exported to openapi-spec.json');\""
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.97.0",
@@ -17,5 +18,9 @@
     "pg": "^8.18.0",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "^1.34.6"
+  },
+  "devDependencies": {
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }

@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
@@ -7,6 +8,12 @@ const routes = require('./routes');
 require('./services/cronService');
 
 const app = express();
+
+app.use(cors({
+    origin: '*', // For development, allow all origins
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
